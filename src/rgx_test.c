@@ -55,19 +55,19 @@ int rgx_test_pattern(struct rgx_node *item, struct stream *s) {
             case RGX_QUESTION: {
                 int i = rgx_test_range(item, s, 0, 1);
                 if (i == 0) return 0;
-                item->next = item->next->next;
+                item->next = next->next;
                 break;
             }
             case RGX_STAR: {
                 int i = rgx_test_range(item, s, 0, 0);
                 if (i == 0) return 0;
-                item->next = item->next->next;
+                item->next = next->next;
                 break;
             }
             case RGX_PLUS: {
                 int i = rgx_test_range(item, s, 1, 0);
                 if (i == 0) return 0;
-                item->next = item->next->next;
+                item->next = next->next;
                 break;
             }
             default: {
@@ -77,6 +77,7 @@ int rgx_test_pattern(struct rgx_node *item, struct stream *s) {
         }
         item = item->next;
     }
+    if (stream_peek(s) == 0 && item->type != RGX_PATTERN_END) return 0;
     return 1;
 }
 
@@ -140,7 +141,15 @@ int rgx_test_range(struct rgx_node *item, struct stream *s, int min, int max) {
 
 int rgx_test_group(struct rgx_node *item, struct stream *s) {
     struct rgx_container *group = (struct rgx_container *) item;
-    return rgx_test_pattern(group->child, s);
+    struct rgx_container *child = (struct rgx_container *) group->child->next;
+    struct rgx_node *b = (struct rgx_node *) child;
+
+    while (!rgx_pattern_at_end(b, s)) {
+        if (rgx_test_pattern(child->child->next, s)) return 1;
+        b = b->next;
+        child = (struct rgx_container *) b;
+    }
+    return 0;
 }
 
 int rgx_is_literal(struct rgx_node *item, char c) {
