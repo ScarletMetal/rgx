@@ -1,5 +1,4 @@
 #include <stdlib.h>
-#include <stdio.h>
 #include "rgx_common.h"
 #include "rgx_compile.h"
 #include "rgx_stream.h"
@@ -69,7 +68,7 @@ struct rgx_node *rgx_range_make(char min, char max) {
 struct rgx_node *rgx_group_make() {
     struct rgx_container *o = malloc(sizeof(struct rgx_container));
     o->base.type = RGX_GROUP;
-    o->child  = rgx_node_make(RGX_SEQUENCE);
+    o->child = rgx_node_make(RGX_SEQUENCE);
     return o;
 }
 
@@ -138,6 +137,7 @@ struct rgx_node *rgx_scan_group(struct stream *sc) {
             p->next = rgx_scan_one(sc);
             p = p->next;
         }
+        p->next = rgx_node_make(RGX_PATTERN_END);
         items->next = rgx_container_make(s);
         items = items->next;
         if (stream_peek(sc) != ')') stream_consume(sc);
