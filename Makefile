@@ -1,5 +1,5 @@
 CC=clang
-CFLAGS= -I. -I'./include/' -largp
+CFLAGS= -I. -std=c89 -I'./include/' -largp
 
 src=$(wildcard ./src/*.c)
 obj=$(src:.c=.o)
