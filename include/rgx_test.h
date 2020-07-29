@@ -1,16 +1,8 @@
-#ifndef RGX_RGX_MATCH_H
-#define RGX_RGX_MATCH_H
+#ifndef RGX_RGX_TEST_H
+#define RGX_RGX_TEST_H
 
 #include "rgx_common.h"
 
-struct rgx_match {
-    struct rgx_match *next;
-    char *src;
-    int size;
-};
-
 int rgx_test(struct rgx_node *pattern, char *src);
 
-struct rgx_match *rgx_match(struct rgx_node *pattern, char *src);
-
-#endif //RGX_RGX_MATCH_H
+#endif //RGX_RGX_TEST_H

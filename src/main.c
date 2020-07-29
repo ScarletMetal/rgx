@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include "rgx_common.h"
 #include "rgx_compile.h"
-#include "rgx_match.h"
+#include "rgx_test.h"
 
 
 
@@ -12,9 +12,10 @@ int main(int argc, char *argv[]) {
         exit(71);
     }
     char *pstr = argv[1];
+    char *tstr = argv[2];
+
     struct rgx_node *p = rgx_compile(pstr);
     rgx_print(p);
-    char *tstr = argv[2];
     int r = rgx_test(p, tstr);
     printf("r=%d\n", r);
 }

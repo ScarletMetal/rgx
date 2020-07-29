@@ -1,5 +1,5 @@
 /.vscode
 /.idea
-
+compile_commands.json
 *.o
 /rgx

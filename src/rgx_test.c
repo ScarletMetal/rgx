@@ -1,4 +1,3 @@
-#include <stdlib.h>
 #include <stdio.h>
 #include <ctype.h>
 #include "rgx_compile.h"
@@ -7,8 +6,6 @@
 #define rgx_pattern_at_end(p, s) ((stream_peek(s) == 0) || p->type == RGX_PATTERN_END)
 
 #define in_range(i, min, max) (i <= max && i >= min)
-
-#define MAX_MATCHES 10000
 
 int rgx_test_simple(struct rgx_node *item, struct stream *s);
 
