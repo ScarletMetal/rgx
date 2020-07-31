@@ -3,6 +3,6 @@
 
 #include "rgx_common.h"
 
-int rgx_test(struct rgx_node *pattern, char *src);
+int rgx_test_str(struct rgx_node *pattern, char *src);
 
 #endif //RGX_RGX_TEST_H

@@ -25,7 +25,7 @@ int rgx_test_pattern(struct rgx_node *item, struct stream *s);
 
 int rgx_is_alpha(char c);
 
-int rgx_test(struct rgx_node *pattern, char *src) {
+int rgx_test_str(struct rgx_node *pattern, char *src) {
     struct stream s;
     stream_init(&s, src);
     return rgx_test_pattern(pattern->next, &s);
