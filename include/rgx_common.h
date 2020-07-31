@@ -1,10 +1,5 @@
 #ifndef RGX_RGX_H
 #define RGX_RGX_H
-
-#define node_assign(n, i) \
-    if (n == NULL) n = i; \
-    else n->next = i
-
 #include <stdint.h>
 
 enum RGX_TYPE {

@@ -25,4 +25,8 @@ int stream_match(struct stream *s, char c);
 
 int stream_mark_distance(struct stream *s);
 
+int stream_at_start(struct stream *s);
+
+int stream_at_end(struct stream *s);
+
 #endif //RGX_RGX_STREAM_H
