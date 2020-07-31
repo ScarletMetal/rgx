@@ -105,7 +105,7 @@ struct rgx_node *rgx_scan_simple(struct stream *sc) {
 }
 
 struct rgx_node *rgx_scan_class(struct stream *sc) {
-    stream_consume(sc);
+    stream_consume(sc); // consume '[' at the start of the class
 
     struct rgx_class *class = (struct rgx_class *) rgx_class_make();
     struct rgx_node *items = class->items;
@@ -120,12 +120,12 @@ struct rgx_node *rgx_scan_class(struct stream *sc) {
         items = items->next;
     }
     items->next = rgx_node_make(RGX_PATTERN_END);
-    stream_consume(sc);
+    stream_consume(sc); // consume ']' at the end of the class
     return class;
 }
 
 struct rgx_node *rgx_scan_group(struct stream *sc) {
-    stream_consume(sc);
+    stream_consume(sc); // consume '(' at the start of the group
 
     struct rgx_container *group = (struct rgx_container *) rgx_group_make();
     struct rgx_node *items = group->child;
@@ -143,7 +143,7 @@ struct rgx_node *rgx_scan_group(struct stream *sc) {
         if (stream_peek(sc) != ')') stream_consume(sc);
     }
     items->next = rgx_node_make(RGX_PATTERN_END);
-    stream_consume(sc);
+    stream_consume(sc); // consume ')' at the end of the group
     return group;
 }
 

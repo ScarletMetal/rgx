@@ -147,7 +147,7 @@ int rgx_test_group(struct rgx_node *item, struct stream *s) {
     struct rgx_node *b = (struct rgx_node *) child;
 
     while (!rgx_pattern_at_end(b, s)) {
-        if (rgx_test_pattern(child->child->next, s)) return 1;
+        if (rgx_test_pattern(child->child->next, s)) return 1; // test each pattern in the group, separated by '|'
         b = b->next;
         child = (struct rgx_container *) b;
     }
