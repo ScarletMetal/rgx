@@ -29,7 +29,7 @@ struct rgx_node *rgx_compile(char *src) {
     struct stream st;
     stream_init(&st, src);
 
-    while (stream_peek(&st) != 0) {
+    while (!stream_at_end(&st)) {
         n->next = rgx_scan_one(&st);
         n = n->next;
     }

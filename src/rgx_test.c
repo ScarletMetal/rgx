@@ -3,7 +3,7 @@
 #include "rgx_compile.h"
 #include "rgx_stream.h"
 
-#define rgx_pattern_at_end(p, s) ((stream_peek(s) == 0) || p->type == RGX_PATTERN_END)
+#define rgx_pattern_at_end(p, s) ((stream_at_end(s)) || p->type == RGX_PATTERN_END)
 
 #define in_range(i, min, max) (i <= max && i >= min)
 
@@ -22,6 +22,8 @@ int rgx_test_one(struct rgx_node *item, struct stream *s);
 int rgx_test_range(struct rgx_node *item, struct stream *s, int min, int max);
 
 int rgx_test_pattern(struct rgx_node *item, struct stream *s);
+
+int rgx_is_alpha(char c);
 
 int rgx_test(struct rgx_node *pattern, char *src) {
     struct stream s;
@@ -77,7 +79,7 @@ int rgx_test_pattern(struct rgx_node *item, struct stream *s) {
         }
         item = item->next;
     }
-    if (stream_peek(s) == 0 && item->type != RGX_PATTERN_END) return 0;
+    if (stream_at_end(s) && item->type != RGX_PATTERN_END) return 0;
     return 1;
 }
 
@@ -89,13 +91,13 @@ int rgx_test_simple(struct rgx_node *item, struct stream *s) {
         case RGX_SPACE:
             return isspace(c);
         case RGX_ALPHA:
-            return isalpha(c);
+            return rgx_is_alpha(c);
         case RGX_DIGIT:
             return isdigit(c);
         case RGX_NON_SPACE:
             return !isspace(c);
         case RGX_NON_ALPHA:
-            return !isalpha(c);
+            return !rgx_is_alpha(c);
         case RGX_NON_DIGIT:
             return !isdigit(c);
         case RGX_LITERAL:
@@ -160,4 +162,8 @@ int rgx_is_literal(struct rgx_node *item, char c) {
 int rgx_in_range(struct rgx_node *item, char c) {
     struct rgx_char_range *r = (struct rgx_char_range *) item;
     return in_range(c, r->min, r->max);
+}
+
+int rgx_is_alpha(char c) {
+    return isalpha(c) || isnumber(c) || c == '_';
 }

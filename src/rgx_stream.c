@@ -43,3 +43,11 @@ int stream_match(struct stream *s, char c) {
 int stream_mark_distance(struct stream *s) {
     return s->current - s->start;
 }
+
+int stream_at_start(struct stream *s) {
+    return s->current == s->src;
+}
+
+int stream_at_end(struct stream *s) {
+    return stream_peek(s) == '\0';
+}
