@@ -1,12 +1,19 @@
 CC=clang
-CFLAGS= -I. -std=c89 -I'./include/' -largp
+CFLAGS= -I. -std=c89 -I'./include/' -largp -g
 
-src=$(wildcard ./src/*.c)
-obj=$(src:.c=.o)
+src := $(shell find ./src -type f -name *.c)
+obj := $(patsubst ./src/%, ./build/%, $(src:.c=.o))
 
 rgx: $(obj)
 	$(CC) -o $@ $^ $(CFLAGS)
-	rm $(obj)
+
+./build/%.o: ./src/%.c
+	$(MKDIR_P) $(dir $@)
+	$(CC) -c $< -o $@ $(CFLAGS)
+
+.PHONY: clean
 
 clean: 
 	rm $(obj)
+
+MKDIR_P ?= mkdir -p
