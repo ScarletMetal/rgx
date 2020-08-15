@@ -5,7 +5,6 @@
     do {                                         \
         if (n != NULL) {t p = n;                 \
             while (p->next != NULL) p = p->next; \
-            printf("setting\n");                 \
             p->next = v;                         \
         } else {                                 \
             n = v;                               \

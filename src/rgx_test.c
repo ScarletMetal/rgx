@@ -86,7 +86,7 @@ int rgx_test_pattern(struct rgx_node *item, struct stream *s) {
             }
         }
     }
-    if (stream_at_end(&s) && item->type != RGX_PATTERN_END) return 0;
+    if (stream_at_end(s) && item->type != RGX_PATTERN_END) return 0;
     return 1;
 }
 
