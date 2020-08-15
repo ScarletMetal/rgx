@@ -2,5 +2,6 @@
 /.idea
 compile_commands.json
 *.o
+*.so
 /rgx
 /build

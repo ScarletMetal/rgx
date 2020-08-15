@@ -1,17 +1,35 @@
 CC=clang
-CFLAGS= -I. -std=c89 -I'./include/' -largp -g
+CFLAGS= -I. -std=c89 -I'./include/' -g
 
 src := $(shell find ./src -type f -name *.c)
-obj := $(patsubst ./src/%, ./build/%, $(src:.c=.o))
+obj := $(patsubst ./src/%, ./build/src/%, $(src:.c=.o))
 
-rgx: $(obj)
-	$(CC) -o $@ $^ $(CFLAGS)
+test_src := $(shell find ./test -type f -name *.c)
+test_obj := $(patsubst ./test/%, ./build/test/%, $(test_src:.c=.o))
 
-./build/%.o: ./src/%.c
+all:
+	make exec
+	make lib
+
+exec: $(obj) $(test_obj)
+	$(CC) -o rgx $^ $(CFLAGS)
+
+lib: $(obj)
+	$(CC) -shared -o rgx.so $^ $(CFLAGS)
+
+./build/src/%.o: ./src/%.c
 	$(MKDIR_P) $(dir $@)
 	$(CC) -c $< -o $@ $(CFLAGS)
 
-.PHONY: clean
+./build/test/%.o: ./test/%.c
+	$(MKDIR_P) $(dir $@)
+	$(CC) -c $< -o $@ $(CFLAGS)
+
+.PHONY: clean test
+
+test:
+	echo $(test_src)
+	echo $(test_obj)
 
 clean: 
 	rm $(obj)
