@@ -7,15 +7,15 @@ obj := $(patsubst ./src/%, ./build/src/%, $(src:.c=.o))
 test_src := $(shell find ./test -type f -name *.c)
 test_obj := $(patsubst ./test/%, ./build/test/%, $(test_src:.c=.o))
 
+lib: $(obj)
+	$(CC) -shared -o rgx.so $^ $(CFLAGS)
+
+test: $(obj) $(test_obj)
+	$(CC) -o rgx $^ $(CFLAGS)
+
 all:
 	make exec
 	make lib
-
-exec: $(obj) $(test_obj)
-	$(CC) -o rgx $^ $(CFLAGS)
-
-lib: $(obj)
-	$(CC) -shared -o rgx.so $^ $(CFLAGS)
 
 ./build/src/%.o: ./src/%.c
 	$(MKDIR_P) $(dir $@)
