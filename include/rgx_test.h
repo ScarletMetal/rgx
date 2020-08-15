@@ -6,6 +6,6 @@
 
 int rgx_test_str(struct rgx_node *pattern, char *src);
 
-int rgx_test_pattern(struct rgx_node *pattern, struct stream *s);
+int rgx_test_stream(struct rgx_node *pattern, struct stream *s);
 
 #endif //RGX_RGX_TEST_H
