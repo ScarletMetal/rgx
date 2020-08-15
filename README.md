@@ -3,7 +3,9 @@
 ## Introduction
 
 rgx is a small regex matching library, implemented from scratch in C89.
-My goal with rgx is to provide a simple and consistend api for rgx matching in C.
+
+
+Supports a the regex syntax from python's `re` module
 
 ## Build & Install
 
