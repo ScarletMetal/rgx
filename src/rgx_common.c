@@ -97,7 +97,7 @@ void rgx_node_print(struct rgx_node *n) {
 
         case RGX_CHAR_RANGE: {
             struct rgx_char_range *r = (struct rgx_char_range *) n;
-            printf("min=%c, max=%c\n", r->min, r->max, r);
+            printf("min=%c, max=%c\n", r->min, r->max);
             break;
         }
         case RGX_LITERAL: {
