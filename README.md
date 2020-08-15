@@ -2,8 +2,8 @@
 
 ## Introduction
 
-rgx is a small regex matching library, implemented from scratch in c89.
-the goal behind rgx is to provide a simple and consistend api for rgx matching in c.
+rgx is a small regex matching library, implemented from scratch in C89.
+My goal with rgx is to provide a simple and consistend api for rgx matching in C.
 
 ## Build & Install
 
@@ -18,10 +18,8 @@ make
 to compile a `rgx` binary from the test sources in the project directory run 
 
 ```shell
-make test
+make test 
 ```
-
- 
 
 ## API
 
