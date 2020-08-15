@@ -1,4 +1,4 @@
-CC=clang
+CC=cc
 CFLAGS= -I. -std=c89 -I'./include/' -g
 
 src := $(shell find ./src -type f -name *.c)
