@@ -110,6 +110,6 @@ void rgx_node_print(struct rgx_node *n) {
     }
 }
 
-char *rgx_type_for(enum RGX_TYPE type) {
+char *rgx_type_str(enum RGX_TYPE type) {
     return rgx_type_strings[type];
 }

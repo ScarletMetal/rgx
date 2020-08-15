@@ -76,6 +76,6 @@ void rgx_node_print(struct rgx_node *n);
 
 void rgx_node_printr(struct rgx_node *n);
 
-char *rgx_type_for(enum RGX_TYPE type);
+char *rgx_type_str(enum RGX_TYPE type);
 
 #endif //RGX_RGX_H
