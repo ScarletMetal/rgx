@@ -72,9 +72,9 @@ struct rgx_container {
     struct rgx_node *child;
 };
 
-void rgx_print(struct rgx_node *n);
+void rgx_node_print(struct rgx_node *n);
 
-void rgx_print_single(struct rgx_node *n);
+void rgx_node_printr(struct rgx_node *n);
 
 char *rgx_type_for(enum RGX_TYPE type);
 

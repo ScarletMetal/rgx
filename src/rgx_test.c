@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <ctype.h>
+#include "rgx_test.h"
 #include "rgx_compile.h"
 #include "rgx_stream.h"
 
@@ -20,8 +21,6 @@ int rgx_in_range(struct rgx_node *item, char c);
 int rgx_test_one(struct rgx_node *item, struct stream *s);
 
 int rgx_test_range(struct rgx_node *item, struct stream *s, int min, int max);
-
-int rgx_test_pattern(struct rgx_node *item, struct stream *s);
 
 int rgx_is_alpha(char c);
 
@@ -56,30 +55,38 @@ int rgx_test_pattern(struct rgx_node *item, struct stream *s) {
         switch (next->type) {
             case RGX_QUESTION: {
                 int i = rgx_test_range(item, s, 0, 1);
-                if (i == 0) return 0;
-                item->next = next->next;
+                if (i == 0) {
+                    return 0;
+                }
+                item = next->next;
                 break;
             }
             case RGX_STAR: {
                 int i = rgx_test_range(item, s, 0, 0);
-                if (i == 0) return 0;
-                item->next = next->next;
+                if (i == 0) {
+                    return 0;
+                }
+                item = next->next;
                 break;
             }
             case RGX_PLUS: {
                 int i = rgx_test_range(item, s, 1, 0);
-                if (i == 0) return 0;
-                item->next = next->next;
+                if (i == 0) {
+                    return 0;
+                }
+                item = next->next;
                 break;
             }
             default: {
                 int i = rgx_test_one(item, s);
-                if (i == 0) return 0;
+                if (i == 0) {
+                    return 0;
+                }
+                item = item->next;
             }
         }
-        item = item->next;
     }
-    if (stream_at_end(s) && item->type != RGX_PATTERN_END) return 0;
+    if (stream_at_end(&s) && item->type != RGX_PATTERN_END) return 0;
     return 1;
 }
 

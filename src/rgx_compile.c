@@ -22,9 +22,8 @@ struct rgx_node *rgx_scan_group(struct stream *sc);
 struct rgx_node *rgx_scan_one(struct stream *sc);
 
 struct rgx_node *rgx_compile(char *src) {
-    struct rgx_node *s = malloc(sizeof(struct rgx_node));
+    struct rgx_node *s = rgx_node_make(RGX_PATTERN);
     struct rgx_node *n = s;
-    s->type = RGX_PATTERN;
 
     struct stream st;
     stream_init(&st, src);

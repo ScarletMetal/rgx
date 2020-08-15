@@ -29,27 +29,27 @@ char *rgx_type_strings[] = {
         "RGX_PATTERN_END",
 };
 
-void rgx_print(struct rgx_node *n) {
+void rgx_node_printr(struct rgx_node *n) {
     printf("%d %s ", n->type, rgx_type_strings[n->type]);
 
     switch (n->type) {
         case RGX_CLASS: {
             struct rgx_class *c = (struct rgx_class *) n;
             printf("\n");
-            rgx_print(c->items);
+            rgx_node_printr(c->items);
             break;
         }
         case RGX_GROUP: {
             struct rgx_container *or = (struct rgx_container *) n;
             printf("\n");
-            rgx_print(or->child);
+            rgx_node_printr(or->child);
             break;
         }
 
         case RGX_CONTAINER: {
             struct rgx_container *c = (struct rgx_container *) n;
             printf("\n");
-            rgx_print(c->child);
+            rgx_node_printr(c->child);
             break;
         }
 
@@ -67,31 +67,31 @@ void rgx_print(struct rgx_node *n) {
             printf("\n");
     }
     if (n->next != NULL) {
-        rgx_print(n->next);
+        rgx_node_printr(n->next);
     }
 }
 
-void rgx_print_single(struct rgx_node *n) {
+void rgx_node_print(struct rgx_node *n) {
     printf("%d %s ", n->type, rgx_type_strings[n->type]);
 
     switch (n->type) {
         case RGX_CLASS: {
             struct rgx_class *c = (struct rgx_class *) n;
             printf("\n");
-            rgx_print(c->items);
+            rgx_node_printr(c->items);
             break;
         }
         case RGX_GROUP: {
             struct rgx_container *or = (struct rgx_container *) n;
             printf("\n");
-            rgx_print(or->child);
+            rgx_node_printr(or->child);
             break;
         }
 
         case RGX_CONTAINER: {
             struct rgx_container *c = (struct rgx_container *) n;
             printf("\n");
-            rgx_print(c->child);
+            rgx_node_printr(c->child);
             break;
         }
 
