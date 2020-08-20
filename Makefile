@@ -25,12 +25,7 @@ all:
 	$(MKDIR_P) $(dir $@)
 	$(CC) -c $< -o $@ $(CFLAGS)
 
-.PHONY: clean test
-
-test:
-	echo $(test_src)
-	echo $(test_obj)
-
+.PHONY: clean
 clean: 
 	rm $(obj)
 
