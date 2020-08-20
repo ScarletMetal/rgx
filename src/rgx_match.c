@@ -19,7 +19,7 @@ struct rgx_match *rgx_match_str(struct rgx_node *pattern, char *str) {
         char *str = s.current;
         int i = rgx_test_stream(pattern->next, &s);
         if (i == 1) {
-            struct rgx_match *m = rgx_match_make(str, s.current - str + 1);
+            struct rgx_match *m = rgx_match_make(str, s.current - str);
             slist_insert_end(struct rgx_match *, matches, m);
         } else {
             stream_consume(&s);

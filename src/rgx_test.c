@@ -31,7 +31,7 @@ int rgx_test_str(struct rgx_node *pattern, char *src) {
 }
 
 int rgx_test_one(struct rgx_node *item, struct stream *s) {
-    stream_mark(s);
+    char *start = s->current;
     int i;
     switch (item->type) {
         case RGX_GROUP:
@@ -45,7 +45,7 @@ int rgx_test_one(struct rgx_node *item, struct stream *s) {
             break;
     }
 
-    if (i == 0) stream_reset(s);
+    if (i == 0) s->current = start;
     return i;
 }
 
