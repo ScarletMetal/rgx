@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "rgx_common.h"
 #include "rgx_test.h"
@@ -15,7 +16,7 @@ struct rgx_match *rgx_match_str(struct rgx_node *pattern, char *str) {
 
     struct rgx_match *matches = NULL;
 
-    while (!stream_at_end(&s)) {
+    while (!stream_at_end(&s) && (s.current - s.src) <= strlen(str)) {
         char *str = s.current;
         int i = rgx_test_stream(pattern->next, &s);
         if (i == 1) {
