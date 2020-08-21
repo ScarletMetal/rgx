@@ -8,7 +8,7 @@ test_src := $(shell find ./test -type f -name *.c)
 test_obj := $(patsubst ./test/%, ./build/test/%, $(test_src:.c=.o))
 
 lib: $(obj)
-	$(CC) -shared -o rgx.so $^ $(CFLAGS)
+	$(CC) -shared -o librgx.so $^ $(CFLAGS)
 
 test: $(obj) $(test_obj)
 	$(CC) -o rgx $^ $(CFLAGS)
