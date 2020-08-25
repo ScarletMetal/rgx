@@ -13,13 +13,13 @@ struct rgx_node *rgx_range_make(char min, char max);
 
 struct rgx_node *rgx_group_make();
 
-struct rgx_node *rgx_scan_simple(struct stream *sc);
+struct rgx_node *rgx_compile_simple(struct stream *sc);
 
-struct rgx_node *rgx_scan_class(struct stream *sc);
+struct rgx_node *rgx_compile_class(struct stream *sc);
 
-struct rgx_node *rgx_scan_group(struct stream *sc);
+struct rgx_node *rgx_compile_group(struct stream *sc);
 
-struct rgx_node *rgx_scan_one(struct stream *sc);
+struct rgx_node *rgx_compile_one(struct stream *sc);
 
 struct rgx_node *rgx_compile(char *src) {
     struct rgx_node *s = rgx_node_make(RGX_PATTERN);
@@ -29,7 +29,7 @@ struct rgx_node *rgx_compile(char *src) {
     stream_init(&st, src);
 
     while (!stream_at_end(&st)) {
-        n->next = rgx_scan_one(&st);
+        n->next = rgx_compile_one(&st);
         n = n->next;
     }
     n->next = rgx_node_make(RGX_PATTERN_END);
@@ -78,7 +78,7 @@ struct rgx_node *rgx_container_make(struct rgx_node *child) {
     return c;
 }
 
-struct rgx_node *rgx_scan_simple(struct stream *sc) {
+struct rgx_node *rgx_compile_simple(struct stream *sc) {
     char c = stream_consume(sc);
     switch (c) {
         case '^': return rgx_node_make(RGX_BEGIN);
@@ -103,7 +103,7 @@ struct rgx_node *rgx_scan_simple(struct stream *sc) {
     }
 }
 
-struct rgx_node *rgx_scan_class(struct stream *sc) {
+struct rgx_node *rgx_compile_class(struct stream *sc) {
     stream_consume(sc); // consume '[' at the start of the class
 
     struct rgx_class *class = (struct rgx_class *) rgx_class_make();
@@ -123,7 +123,7 @@ struct rgx_node *rgx_scan_class(struct stream *sc) {
     return class;
 }
 
-struct rgx_node *rgx_scan_group(struct stream *sc) {
+struct rgx_node *rgx_compile_group(struct stream *sc) {
     stream_consume(sc); // consume '(' at the start of the group
 
     struct rgx_container *group = (struct rgx_container *) rgx_group_make();
@@ -133,7 +133,7 @@ struct rgx_node *rgx_scan_group(struct stream *sc) {
         struct rgx_node *p = rgx_node_make(RGX_PATTERN);
         struct rgx_node *s = p;
         while (stream_peek(sc) != ')' && stream_peek(sc) != '|') {
-            p->next = rgx_scan_one(sc);
+            p->next = rgx_compile_one(sc);
             p = p->next;
         }
         p->next = rgx_node_make(RGX_PATTERN_END);
@@ -146,14 +146,14 @@ struct rgx_node *rgx_scan_group(struct stream *sc) {
     return group;
 }
 
-struct rgx_node *rgx_scan_one(struct stream *sc) {
+struct rgx_node *rgx_compile_one(struct stream *sc) {
     char c = stream_peek(sc);
     switch (c) {
         case '[':
-            return rgx_scan_class(sc);
+            return rgx_compile_class(sc);
         case '(':
-            return rgx_scan_group(sc);
+            return rgx_compile_group(sc);
         default:
-            return rgx_scan_simple(sc);
+            return rgx_compile_simple(sc);
     }
 }
