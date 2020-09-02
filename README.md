@@ -35,9 +35,9 @@ int main(int argc, char *argv) {
 
     int i = rgx_test_str(pattern, "123");
     if (i) {
-        printf("pattern found in provided string\n");
+        printf("pattern found in the provided string\n");
     } else {
-        printf("pattern not found in provided string\n");
+        printf("pattern not found in the provided string\n");
     }   
 }
 ```
