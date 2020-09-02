@@ -5,7 +5,7 @@
 rgx is a small regex matching library, implemented from scratch in C89.
 
 
-Supports a the regex syntax from python's `re` module
+Supports the regex syntax from python's `re` module
 
 ## Build & Install
 
