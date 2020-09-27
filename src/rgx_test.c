@@ -109,6 +109,10 @@ int rgx_test_simple(struct rgx_node *item, struct stream *s) {
             return !isdigit(c);
         case RGX_LITERAL:
             return rgx_is_literal(item, c);
+				case RGX_BEGIN:
+						return 1;
+				case RGX_END:
+						return 1;
         default:
             return 0;
     }
@@ -172,5 +176,5 @@ int rgx_in_range(struct rgx_node *item, char c) {
 }
 
 int rgx_is_alpha(char c) {
-    return isalpha(c) || isnumber(c) || c == '_';
+    return isalpha(c) || isdigit(c) || c == '_';
 }
