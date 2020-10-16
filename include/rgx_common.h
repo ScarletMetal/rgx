@@ -19,9 +19,8 @@ enum RGX_TYPE {
     RGX_STAR,
     RGX_PLUS,
     RGX_QUESTION,
-    RGX_RANGE,
 
-    RGX_CHAR_RANGE,
+    RGX_RANGE,
     RGX_CLASS,
     RGX_GROUP,
 
@@ -53,13 +52,6 @@ struct rgx_class {
 };
 
 struct rgx_range {
-    struct rgx_node base;
-
-    unsigned int min;
-    unsigned int max;
-};
-
-struct rgx_char_range {
     struct rgx_node base;
 
     char min;

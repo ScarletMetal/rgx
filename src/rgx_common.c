@@ -20,7 +20,7 @@ char *rgx_type_strings[] = {
         "RGX_QUESTION",
         "RGX_RANGE",
 
-        "RGX_CHAR_RANGE",
+        "RGX_RANGE",
         "RGX_CLASS",
         "RGX_GROUP",
         "RGX_PATTERN",
@@ -53,8 +53,8 @@ void rgx_node_printr(struct rgx_node *n) {
             break;
         }
 
-        case RGX_CHAR_RANGE: {
-            struct rgx_char_range *r = (struct rgx_char_range *) n;
+        case RGX_RANGE: {
+            struct rgx_range *r = (struct rgx_range *) n;
             printf("min=%c, max=%c\n", r->min, r->max);
             break;
         }
@@ -95,8 +95,8 @@ void rgx_node_print(struct rgx_node *n) {
             break;
         }
 
-        case RGX_CHAR_RANGE: {
-            struct rgx_char_range *r = (struct rgx_char_range *) n;
+        case RGX_RANGE: {
+            struct rgx_range *r = (struct rgx_range *) n;
             printf("min=%c, max=%c\n", r->min, r->max);
             break;
         }

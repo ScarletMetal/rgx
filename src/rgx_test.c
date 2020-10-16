@@ -128,7 +128,7 @@ int rgx_test_class(struct rgx_node *item, struct stream *s) {
                 if (rgx_is_literal(seq, c))
                     return 1;
                 break;
-            case RGX_CHAR_RANGE:
+            case RGX_RANGE:
                 if (rgx_in_range(seq, c))
                     return 1;
                 break;
@@ -171,7 +171,7 @@ int rgx_is_literal(struct rgx_node *item, char c) {
 }
 
 int rgx_in_range(struct rgx_node *item, char c) {
-    struct rgx_char_range *r = (struct rgx_char_range *) item;
+    struct rgx_range *r = (struct rgx_range *) item;
     return in_range(c, r->min, r->max);
 }
 

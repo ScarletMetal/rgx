@@ -57,8 +57,8 @@ struct rgx_node *rgx_class_make() {
 }
 
 struct rgx_node *rgx_range_make(char min, char max) {
-    struct rgx_char_range *r = malloc(sizeof(struct rgx_char_range));
-    r->base.type = RGX_CHAR_RANGE;
+    struct rgx_range *r = malloc(sizeof(struct rgx_range));
+    r->base.type = RGX_RANGE;
     r->min = min;
     r->max = max;
     return r;
